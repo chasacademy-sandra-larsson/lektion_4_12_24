@@ -15,42 +15,50 @@ const person = {
     }
   };
   // Istället för detta
- 
+//  const first = person.first;
+//  const last = person.last;
 
-  // Destructurering
-  const { first, last, adress: {street, number} } = person;
+// är detta object destructering
+//  const {first, last} = person;
+//  console.log(first);
+//  console.log(last);
+
+  // Destructurering med nästlat objekt
+ //const { first, last, adress: {street, number} } = person;
 
 
 // ************************ Exempel 2 ************************//
-// const ul = document.getElementById('invoice-list');
+const ul = document.getElementById('invoice-list');
 
-// const getInvoices = async () => {
-//     try {
-//         const response = await fetch('./data.json');
-//         const data = await response.json();
-//         return data;
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
+const getInvoices = async () => {
+    try {
+        const response = await fetch('./data.json');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
-// const renderInvoices = async () => {
+const renderInvoices = async () => {
 
-//     const invoices = await getInvoices();
+    const invoices = await getInvoices();
 
-//     const {length} = invoices;
-//     console.log(length);
+    // Använda object destructering i funktion
+    const invoiceList = invoices.map(({id, paymentDue, clientName, status, total}) => {
+        return `<li>${id} - ${paymentDue} - ${clientName} - ${status} - ${total}</li>`;
+    }).join('');
 
-//     // Använda object destructering i funktion
-//     const invoiceList = invoices.map((invoice) => {
-//         return `<li>${invoice.id} - ${invoice.paymentDue} - ${invoice.clientName} - ${invoice.status} - ${invoice.total}</li>`;
-//     }).join('');
+    // Utan objekt destrcutering
+    // const invoiceList = invoices.map((invoice) => {
+    //     return `<li>${invoice.id} - ${invoice.paymentDue} - ${invoice.clientName} - ${invoice-status} - ${total}</li>`;
+    // }).join('');
 
-//     ul.innerHTML = invoiceList;
+    ul.innerHTML = invoiceList;
 
-// }
+}
 
-// renderInvoices();
+renderInvoices();
 
 
 // ************************ Exempel 3 ************************//
@@ -60,6 +68,12 @@ const studentDetails = {
     firstName: 'John',
     lastName: 'Mary',
     age: 20,
-    country: 'Sri Lanka'
+    country: 'Sri Lanka',
+    hobbies: ["soccer", "basketball"]
 }
 
+const {firstName, lastName, ...rest} = studentDetails;
+
+console.log(firstName);
+console.log(lastName);
+console.log(rest);
